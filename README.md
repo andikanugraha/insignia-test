@@ -17,7 +17,8 @@ Following are the main functionalities expected from the services
 4. Transfer between wallets
 5. List Top N of transactions by value per user
 6. List overall top transacting users by value
-   You must use NestJs Framework for the implementation, each data must be stored on Postgres SQL database and Prisma ORM
+
+You must use NestJs Framework for the implementation, each data must be stored on Postgres SQL database and Prisma ORM
 
 Following are the evaluation criteria:
 
