@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma/prisma.module';
@@ -6,8 +7,19 @@ import { UsersModule } from './users/users.module';
 import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
-  imports: [PrismaModule, UsersModule, TransactionsModule],
+  imports: [
+    ConfigModule.forRoot(),
+    PrismaModule,
+    UsersModule,
+    TransactionsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  static port: string;
+
+  constructor(private configService: ConfigService) {
+    AppModule.port = configService.get('PORT');
+  }
+}
