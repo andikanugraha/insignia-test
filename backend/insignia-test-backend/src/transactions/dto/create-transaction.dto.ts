@@ -2,10 +2,10 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTransactionDto {
   @ApiProperty()
-  from: number;
+  fromId: number;
 
   @ApiProperty()
-  to: number;
+  toId: number;
 
   @ApiProperty()
   amount: number;

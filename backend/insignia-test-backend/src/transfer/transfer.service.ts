@@ -25,6 +25,9 @@ export class TransferService {
     if (!toUser) {
       throw new NotFoundException('Destination user not found');
     }
+    if (fromUser.id === toUser.id) {
+      throw new BadRequestException('Invalid destination');
+    }
     if (isNaN(amount) || amount < 0 || amount > 10000000) {
       throw new BadRequestException('Invalid topup amount');
     }
@@ -49,8 +52,8 @@ export class TransferService {
     await this.usersService.update(toUser.id, updateToUser);
 
     const createTransaction = {
-      from: fromUser.id,
-      to: toUser.id,
+      fromId: fromUser.id,
+      toId: toUser.id,
       amount,
     };
     return await this.transactionsService.create(createTransaction);

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
@@ -8,7 +8,7 @@ export class BalanceService {
   async getBalance(id: number) {
     const user = await this.usersService.findOne(id);
     if (!user) {
-      throw new BadRequestException('Invalid user');
+      throw new NotFoundException('Invalid user');
     }
     return {
       balance: user.balance,

@@ -14,18 +14,22 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  password  String
-  balance   Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id              Int           @id @default(autoincrement())
+  username        String        @unique
+  password        String
+  balance         Float
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  transactionFrom Transaction[] @relation(name: "from")
+  transactionTo   Transaction[] @relation(name: "to")
 }
 
 model Transaction {
   id        Int      @id @unique @default(autoincrement())
-  from      Int
-  to        Int
+  fromId    Int      @map("from_id")
+  from      User     @relation(name: "from", fields: [fromId], references: [id])
+  toId      Int      @map("to_id")
+  to        User     @relation(name: "to", fields: [toId], references: [id])
   amount    Float
   createdAt DateTime @default(now())
 }
