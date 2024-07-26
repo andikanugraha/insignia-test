@@ -10,6 +10,7 @@ import { TopupModule } from './topup/topup.module';
 import { BalanceModule } from './balance/balance.module';
 import { TransferModule } from './transfer/transfer.module';
 import { TopUsersModule } from './top_users/top_users.module';
+import { TopTransactionsForUserModule } from './top_transactions_for_user/top_transactions_for_user.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { TopUsersModule } from './top_users/top_users.module';
     BalanceModule,
     TransferModule,
     TopUsersModule,
+    TopTransactionsForUserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
