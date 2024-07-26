@@ -6,10 +6,10 @@ export class TransactionEntity implements Transaction {
   id: number;
 
   @ApiProperty()
-  from: string;
+  from: number;
 
   @ApiProperty()
-  to: string;
+  to: number;
 
   @ApiProperty()
   amount: number;

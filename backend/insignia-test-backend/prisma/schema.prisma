@@ -24,8 +24,8 @@ model User {
 
 model Transaction {
   id        Int      @id @unique @default(autoincrement())
-  from      String
-  to        String
+  from      Int
+  to        Int
   amount    Float
   createdAt DateTime @default(now())
 }

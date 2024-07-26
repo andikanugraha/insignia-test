@@ -1,11 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateTransactionDto {
+export class TransferDto {
   @ApiProperty()
-  from: number;
-
-  @ApiProperty()
-  to: number;
+  to_username: string;
 
   @ApiProperty()
   amount: number;

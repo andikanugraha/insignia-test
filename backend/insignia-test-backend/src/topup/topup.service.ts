@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 
 @Injectable()
@@ -8,7 +12,7 @@ export class TopupService {
   async balanceTopup(id: number, amount: number) {
     const user = await this.usersService.findOne(id);
     if (!user) {
-      throw new BadRequestException('Invalid user');
+      throw new NotFoundException('Invalid user');
     }
     if (isNaN(amount) || amount < 0 || amount > 10000000) {
       throw new BadRequestException('Invalid topup amount');

@@ -23,17 +23,17 @@ async function main() {
     },
   });
 
-  const transaction1 = await prisma.transaction.upsert({
-    where: { id: 0 },
-    update: {},
-    create: {
-      from: 'user1',
-      to: 'user2',
-      amount: 100,
-    },
-  });
+  // const transaction1 = await prisma.transaction.upsert({
+  //   where: { id: 0 },
+  //   update: {},
+  //   create: {
+  //     from: 1,
+  //     to: 2,
+  //     amount: 100,
+  //   },
+  // });
 
-  console.log(user1, user2, transaction1);
+  console.log(user1, user2);
 }
 
 main()
