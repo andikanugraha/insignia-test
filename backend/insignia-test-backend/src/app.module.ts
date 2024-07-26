@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { AuthModule } from './auth/auth.module';
 import { TopupModule } from './topup/topup.module';
+import { BalanceModule } from './balance/balance.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { TopupModule } from './topup/topup.module';
     TransactionsModule,
     AuthModule,
     TopupModule,
+    BalanceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
