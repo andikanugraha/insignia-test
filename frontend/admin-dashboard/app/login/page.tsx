@@ -6,29 +6,61 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { signIn } from '@/lib/auth';
+import { FormEvent, useState } from 'react';
 
 export default function LoginPage() {
+  // const [username, setUsername] = useState('')
+  // const [password, setPassword] = useState('')
+
+  // const handleUsername = (e: any) => {
+  //   setUsername(e.target.value)
+  // }
+  // const handlePassword = (e: any) => {
+  //   setPassword(e.target.value)
+  // }
+
+  // const onClick = () => {
+  //   setUsername('');
+  //   setPassword('');
+  // }
+  const actionSignIn = async (formData: FormData) => {
+    'use server'
+    await signIn('credentials', {
+      redirectTo: '/',
+      username: formData.get('username'),
+      password: formData.get('password'),
+    });
+}
+
   return (
-    <div className="min-h-screen flex justify-center items-start md:items-center p-8">
+    <div className="min-h-screen flex flex-col justify-center items-start md:items-center p-8">
+      <div>
+        <img src="/logo-ins.webp" width="100px" className="mb-6"></img>
+      </div>
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>
-            This demo uses GitHub for authentication.
+            Admin Dashboard for Insignia
           </CardDescription>
         </CardHeader>
         <CardFooter>
           <form
-            action={async () => {
-              'use server';
-              await signIn('github', {
-                redirectTo: '/'
-              });
-            }}
+            action={actionSignIn}
             className="w-full"
           >
-            <Button className="w-full">Sign in with GitHub</Button>
+            <div className="my-3">
+              <Label htmlFor="username">Username</Label>
+              <Input id="username" placeholder="Please input Username" type="text"></Input>
+            </div>
+            <div className="my-3">
+              <Label htmlFor="password">Password</Label>
+              <Input id="password" placeholder="Please input Password" type="password"></Input>
+            </div>
+            <Button className="w-full" type="submit">Sign in</Button>
           </form>
         </CardFooter>
       </Card>
