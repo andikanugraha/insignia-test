@@ -15,6 +15,13 @@ export async function User() {
   let session = await auth();
   let user = session?.user;
 
+  const actionSignOut = async (formData: FormData) => {
+    'use server';
+    await signOut({
+      redirectTo: '/login',
+    });
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -41,10 +48,7 @@ export async function User() {
         {user ? (
           <DropdownMenuItem>
             <form
-              action={async () => {
-                'use server';
-                await signOut();
-              }}
+              action={actionSignOut}
             >
               <button type="submit">Sign Out</button>
             </form>

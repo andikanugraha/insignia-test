@@ -12,20 +12,7 @@ import { signIn } from '@/lib/auth';
 import { FormEvent, useState } from 'react';
 
 export default function LoginPage() {
-  // const [username, setUsername] = useState('')
-  // const [password, setPassword] = useState('')
 
-  // const handleUsername = (e: any) => {
-  //   setUsername(e.target.value)
-  // }
-  // const handlePassword = (e: any) => {
-  //   setPassword(e.target.value)
-  // }
-
-  // const onClick = () => {
-  //   setUsername('');
-  //   setPassword('');
-  // }
   const actionSignIn = async (formData: FormData) => {
     'use server'
     await signIn('credentials', {
@@ -54,11 +41,11 @@ export default function LoginPage() {
           >
             <div className="my-3">
               <Label htmlFor="username">Username</Label>
-              <Input id="username" placeholder="Please input Username" type="text"></Input>
+              <Input id="username" name="username" placeholder="Please input Username" type="text"></Input>
             </div>
             <div className="my-3">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" placeholder="Please input Password" type="password"></Input>
+              <Input id="password" name="password" placeholder="Please input Password" type="password"></Input>
             </div>
             <Button className="w-full" type="submit">Sign in</Button>
           </form>

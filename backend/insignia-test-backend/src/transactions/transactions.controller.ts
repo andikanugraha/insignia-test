@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { TransactionsService } from './transactions.service';
@@ -26,7 +27,13 @@ export class TransactionsController {
 
   @Get()
   @ApiOkResponse({ type: TransactionEntity, isArray: true })
-  findAll() {
+  findAll(@Query() query) {
+    if (query.fromId || query.toId) {
+      return this.transactionsService.findAllByQuery(
+        parseInt(query.fromId),
+        parseInt(query.toId),
+      );
+    }
     return this.transactionsService.findAll();
   }
 

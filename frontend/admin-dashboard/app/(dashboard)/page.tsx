@@ -1,15 +1,20 @@
+// import { useSession, signIn, signOut } from "next-auth/react";
+import { auth, authOptions } from "@/lib/auth"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { File, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductsTable } from './products-table';
 import { getProducts } from '@/lib/db';
-import { getUsers } from '@/lib/api';
+import { getUsers, getTopTransactionsPerUser } from '@/lib/api';
+import { TransactionsTable } from './transactions-table';
 
 export default async function ProductsPage({
   searchParams
 }: {
   searchParams: { q: string; offset: string };
-}) {
+  }) {
+  // const { data: session } = useSession();
+  const session = await auth()
   const search = searchParams.q ?? '';
   const offset = searchParams.offset ?? 0;
   // const { products, newOffset, totalProducts } = await getProducts(
@@ -19,6 +24,9 @@ export default async function ProductsPage({
 
   const users = await getUsers(search, Number(offset));
   console.log('users', users)
+  console.log('session', session)
+  const topTransactions = await getTopTransactionsPerUser(session?.accessToken)
+  console.log('top transactions', topTransactions)
 
   return (
     <Tabs defaultValue="all">
@@ -47,12 +55,16 @@ export default async function ProductsPage({
         </div>
       </div>
       <div>
-        {users.map(user => (
-            <div key={user.id}>{user.username}</div>
+        {users.map((user: any) => (
+          <div key={user.id}>
+            <div>{user.username}</div>
+            <div>{user.balance}</div>
+          </div>
           )
         )}
       </div>
       <TabsContent value="all">
+        {/* <TransactionsTable></TransactionsTable> */}
         {/* <ProductsTable
           products={products}
           offset={newOffset ?? 0}

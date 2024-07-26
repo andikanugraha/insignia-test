@@ -17,6 +17,17 @@ export class TransactionsService {
     return this.prismaService.transaction.findMany({ where: {} });
   }
 
+  findAllByQuery(fromId: number, toId: number) {
+    const where = {};
+    if (fromId) {
+      where['fromId'] = fromId;
+    }
+    if (toId) {
+      where['toId'] = toId;
+    }
+    return this.prismaService.transaction.findMany({ where });
+  }
+
   findOne(id: number) {
     return this.prismaService.transaction.findUnique({ where: { id } });
   }
