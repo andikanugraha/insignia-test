@@ -7,31 +7,43 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsersService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(
+    private prismaService: PrismaService,
+    private jwtService: JwtService,
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     const user = await this.findOneByUsername(createUserDto.username);
     if (user) {
-      throw new ConflictException('User already exist');
+      throw new ConflictException('Username already exist');
     }
 
     const saltRounds = parseInt(process.env.SALT_ROUNDS);
     const prismaService = this.prismaService;
+    const jwtService = this.jwtService;
     return bcrypt
       .hash(createUserDto.password, saltRounds)
-      .then(function (hash) {
+      .then(async function (hash) {
         const newUser = {
           username: createUserDto.username,
           password: hash,
           balance: createUserDto.balance,
         };
-        return prismaService.user.create({ data: newUser });
+        const createUser = await prismaService.user.create({ data: newUser });
+        const payload = {
+          sub: createUser.id,
+          username: createUser.username,
+        };
+        return {
+          token: await jwtService.signAsync(payload),
+        };
       })
       .catch((err) => {
-        console.log('error', err.response.message);
+        console.error('create user error', err);
         throw new InternalServerErrorException();
       });
   }
