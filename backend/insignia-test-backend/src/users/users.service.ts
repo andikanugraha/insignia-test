@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -7,8 +12,28 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class UsersService {
   constructor(private prismaService: PrismaService) {}
 
-  create(createUserDto: CreateUserDto) {
-    return this.prismaService.user.create({ data: createUserDto });
+  async create(createUserDto: CreateUserDto) {
+    const user = await this.findOneByUsername(createUserDto.username);
+    if (user) {
+      throw new ConflictException('User already exist');
+    }
+
+    const saltRounds = parseInt(process.env.SALT_ROUNDS);
+    const prismaService = this.prismaService;
+    return bcrypt
+      .hash(createUserDto.password, saltRounds)
+      .then(function (hash) {
+        const newUser = {
+          username: createUserDto.username,
+          password: hash,
+          balance: createUserDto.balance,
+        };
+        return prismaService.user.create({ data: newUser });
+      })
+      .catch((err) => {
+        console.log('error', err.response.message);
+        throw new InternalServerErrorException();
+      });
   }
 
   findAll() {
