@@ -6,15 +6,17 @@ interface Transactions {
 
 }
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL
+
 export const getUsers = async (search: string, offset: number) => {
-  const res = await fetch(process.env.API_URL + 'users')
+  const res = await fetch(apiUrl + 'users')
   const result = await res.json()
   return result
 }
 
 export const getBalance = async (token: string) => {
   const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
-  const res = await fetch(process.env.NEXT_PUBLIC_API_URL + 'balance', { 
+  const res = await fetch(apiUrl + 'balance', { 
     headers
   })
   const result = await res.json()
@@ -26,14 +28,14 @@ export const getTransactions = async (from: string, to: string) => {
     from,
     to
   })
-  const res = await fetch(process.env.API_URL + 'transactions?' + searchParams, {})
+  const res = await fetch(apiUrl + 'transactions?' + searchParams, {})
   const result = await res.json()
   return result
 }
 
 export const postTopup = async (token: string, amount: number) => {
   const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
-  const res = await fetch(process.env.API_URL + 'topup', {
+  const res = await fetch(apiUrl + 'topup', {
     method: 'POST',
     body: JSON.stringify({
       amount
@@ -49,7 +51,7 @@ export const postTopup = async (token: string, amount: number) => {
 
 export const postTransfer = async (token: string, toUsername: string, amount: number) => {
   const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
-  const res = await fetch(process.env.API_URL + 'transfer', {
+  const res = await fetch(apiUrl + 'transfer', {
     method: 'POST',
     body: JSON.stringify({
       to_username: toUsername,
@@ -66,7 +68,7 @@ export const postTransfer = async (token: string, toUsername: string, amount: nu
 
 export const getTopTransactionsPerUser = async (token: string) => {
   const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
-  const res = await fetch(process.env.API_URL + 'top_transactions_per_user', {
+  const res = await fetch(apiUrl + 'top_transactions_per_user', {
     headers
   })
   const result = await res.json()
@@ -75,7 +77,7 @@ export const getTopTransactionsPerUser = async (token: string) => {
 
 export const getTopUsers = async (token: string) => {
   const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
-  const res = await fetch(process.env.API_URL + 'top_users', {
+  const res = await fetch(apiUrl + 'top_users', {
     headers
   })
   const result = await res.json()
