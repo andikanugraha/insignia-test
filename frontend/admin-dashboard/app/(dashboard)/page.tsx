@@ -9,6 +9,7 @@ import { getUsers, getTransactions, getTopTransactionsPerUser } from '@/lib/api'
 import { TransactionsTable } from './transactions-table';
 import MyTopTransactions from "./my-top-transactions";
 import { SessionProvider } from "next-auth/react";
+import TopUsers from "./top-users";
 
 export default async function ProductsPage({
   searchParams
@@ -39,6 +40,11 @@ export default async function ProductsPage({
         </SessionProvider>
       </div>
       <div className="col-span-6">
+        <SessionProvider>
+          <TopUsers></TopUsers>
+        </SessionProvider>
+      </div>
+      {/* <div className="col-span-6">
         <Tabs defaultValue="all">
           <div className="flex items-center">
             <TabsList>
@@ -74,16 +80,11 @@ export default async function ProductsPage({
             )}
           </div>
           <TabsContent value="all">
-            {/* <TransactionsTable></TransactionsTable> */}
-            {/* <ProductsTable
-              products={products}
-              offset={newOffset ?? 0}
-              totalProducts={totalProducts}
-            /> */}
+            <TransactionsTable></TransactionsTable>
           </TabsContent>
           
         </Tabs>
-      </div>
+      </div> */}
     </div>
   );
 }

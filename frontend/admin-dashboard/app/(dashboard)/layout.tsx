@@ -9,6 +9,7 @@ import {
   PanelLeft,
   Settings,
   ShoppingCart,
+  ArrowRightLeft,
   Users2
 } from 'lucide-react';
 
@@ -87,13 +88,15 @@ function DesktopNav() {
           <CircleArrowUp className="h-5 w-5" />
         </NavItem>
 
+        <NavItem href="/transactions" label="Transactions">
+          <ArrowRightLeft className="h-5 w-5" />
+        </NavItem>
+
         <NavItem href="/users" label="Users">
           <Users2 className="h-5 w-5" />
         </NavItem>
 
-        <NavItem href="/analytics" label="Analytics">
-          <LineChart className="h-5 w-5" />
-        </NavItem>
+        
       </nav>
       <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
         <Tooltip>
@@ -153,6 +156,13 @@ function MobileNav() {
             Transfers
           </Link>
           <Link
+            href="/transactions"
+            className="flex items-center gap-4 px-2.5 text-foreground"
+          >
+            <ArrowRightLeft className="h-5 w-5" />
+            Transactions
+          </Link>
+          <Link
             href="/users"
             className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
           >
@@ -178,7 +188,7 @@ function DashboardBreadcrumb() {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="#">Dashboard</Link>
+            <Link href="/">Dashboard</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />

@@ -11,6 +11,7 @@ import { BalanceModule } from './balance/balance.module';
 import { TransferModule } from './transfer/transfer.module';
 import { TopUsersModule } from './top_users/top_users.module';
 import { TopTransactionsForUserModule } from './top_transactions_for_user/top_transactions_for_user.module';
+import { MyTransactionsModule } from './my_transactions/my_transactions.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { TopTransactionsForUserModule } from './top_transactions_for_user/top_tr
     TransferModule,
     TopUsersModule,
     TopTransactionsForUserModule,
+    MyTransactionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
