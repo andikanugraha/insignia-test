@@ -13,8 +13,8 @@ export const getUsers = async (search: string, offset: number) => {
 }
 
 export const getBalance = async (token: string) => {
-  const headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`})
-  const res = await fetch(process.env.API_URL + 'balance', { 
+  const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
+  const res = await fetch(process.env.NEXT_PUBLIC_API_URL + 'balance', { 
     headers
   })
   const result = await res.json()
@@ -22,13 +22,17 @@ export const getBalance = async (token: string) => {
 }
 
 export const getTransactions = async (from: string, to: string) => {
-  const res = await fetch(process.env.API_URL + 'transactions')
+  const searchParams = new URLSearchParams({
+    from,
+    to
+  })
+  const res = await fetch(process.env.API_URL + 'transactions?' + searchParams, {})
   const result = await res.json()
   return result
 }
 
 export const postTopup = async (token: string, amount: number) => {
-  const headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`})
+  const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
   const res = await fetch(process.env.API_URL + 'topup', {
     method: 'POST',
     body: JSON.stringify({
@@ -36,12 +40,15 @@ export const postTopup = async (token: string, amount: number) => {
     }),
     headers
   })
-  const result = await res.json()
-  return result
+  if (res.status === 204) {
+    return true
+  } else {
+    return false
+  }
 }
 
 export const postTransfer = async (token: string, toUsername: string, amount: number) => {
-  const headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`})
+  const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
   const res = await fetch(process.env.API_URL + 'transfer', {
     method: 'POST',
     body: JSON.stringify({
@@ -50,12 +57,15 @@ export const postTransfer = async (token: string, toUsername: string, amount: nu
     }),
     headers
   })
-  const result = await res.json()
-  return result
+  if (res.status === 204) {
+    return true
+  } else {
+    return false
+  }
 }
 
 export const getTopTransactionsPerUser = async (token: string) => {
-  const headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`})
+  const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
   const res = await fetch(process.env.API_URL + 'top_transactions_per_user', {
     headers
   })
@@ -64,7 +74,7 @@ export const getTopTransactionsPerUser = async (token: string) => {
 }
 
 export const getTopUsers = async (token: string) => {
-  const headers = new Headers({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`})
+  const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
   const res = await fetch(process.env.API_URL + 'top_users', {
     headers
   })

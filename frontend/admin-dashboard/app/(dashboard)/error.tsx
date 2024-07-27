@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import { useEffect } from 'react';
 
 export default function Error({
@@ -24,6 +26,9 @@ export default function Error({
           Please refresh the page. If you still see this error,
           please contact the administrator.
         </p>
+        <Button asChild className="">
+          <Link href="/">Back to Dashboard</Link>
+        </Button>
         {/* <p>
           Inside the Vercel Postgres dashboard, create a table based on the
           schema defined in this repository.

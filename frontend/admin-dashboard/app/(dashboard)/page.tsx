@@ -5,7 +5,7 @@ import { File, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ProductsTable } from './products-table';
 import { getProducts } from '@/lib/db';
-import { getUsers, getTopTransactionsPerUser } from '@/lib/api';
+import { getUsers, getTransactions, getTopTransactionsPerUser } from '@/lib/api';
 import { TransactionsTable } from './transactions-table';
 
 export default async function ProductsPage({
@@ -21,11 +21,12 @@ export default async function ProductsPage({
   //   search,
   //   Number(offset)
   // );
-
+  const accessToken = session?.accessToken
   const users = await getUsers(search, Number(offset));
   console.log('users', users)
   console.log('session', session)
-  const topTransactions = await getTopTransactionsPerUser(session?.accessToken)
+  const topTransactions = await getTopTransactionsPerUser(accessToken ?? '')
+  // const transactions = await getTransactions()
   console.log('top transactions', topTransactions)
 
   return (
