@@ -14,6 +14,13 @@ export const getUsers = async (search: string, offset: number) => {
   return result
 }
 
+export const getProfile = async (token: string) => {
+  const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
+  const res = await fetch(apiUrl + 'auth/profile', { headers })
+  const result = await res.json()
+  return result
+}
+
 export const getBalance = async (token: string) => {
   const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
   const res = await fetch(apiUrl + 'balance', { 

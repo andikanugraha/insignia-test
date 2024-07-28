@@ -10,6 +10,7 @@ import { TransactionsTable } from './transactions-table';
 import MyTopTransactions from "./my-top-transactions";
 import { SessionProvider } from "next-auth/react";
 import TopUsers from "./top-users";
+import DashboardMenu from "./dashboard-menu";
 
 export default async function ProductsPage({
   searchParams
@@ -33,7 +34,13 @@ export default async function ProductsPage({
   console.log('top transactions', topTransactions)
 
   return (
-    <div className="grid grid-cols-12 space-x-4">
+    <div className="grid grid-cols-12 gap-4">
+      <div className="col-span-6">
+        <SessionProvider>
+          <DashboardMenu></DashboardMenu>
+        </SessionProvider>
+      </div>
+      <div className="col-span-12"></div>
       <div className="col-span-6">
         <SessionProvider>
           <MyTopTransactions></MyTopTransactions>
