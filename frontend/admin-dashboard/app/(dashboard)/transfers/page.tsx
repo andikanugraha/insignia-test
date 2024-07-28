@@ -47,7 +47,7 @@ export default async function TransfersPage() {
             <div>
               <div className="my-3">
                 <Label htmlFor="toUsername">Send to User</Label>
-                <Select id="toUsername" name="toUsername">
+                <Select name="toUsername">
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select a Username" />
                   </SelectTrigger>
