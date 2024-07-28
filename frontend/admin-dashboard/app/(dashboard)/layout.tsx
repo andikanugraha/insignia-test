@@ -35,6 +35,7 @@ import Providers from './providers';
 import { NavItem } from './nav-item';
 import { SearchInput } from './search';
 import { Toaster } from '@/components/ui/toaster';
+import Image from 'next/image';
 
 export default function DashboardLayout({
   children
@@ -72,7 +73,12 @@ function DesktopNav() {
           className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
         >
           {/* <VercelLogo className="h-3 w-3 transition-all group-hover:scale-110" /> */}
-          <img src="/icon_insignia.jpg" width="100px" className="transition-all group-hover:scale-110"></img>
+          <Image
+            src="/icon_insignia.jpg"
+            width="100"
+            height="100"
+            alt="Insignia"
+            className="transition-all group-hover:scale-110"></Image>
           <span className="sr-only">Insignia Test</span>
         </Link>
 

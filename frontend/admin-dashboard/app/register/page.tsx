@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { postRegister } from '@/lib/api'
+import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import React from 'react'
@@ -28,7 +29,7 @@ const RegisterPage = () => {
   return (
     <div className="min-h-screen flex flex-col justify-center items-start md:items-center p-8">
       <div>
-        <img src="/logo-ins.webp" width="100px" className="mb-6"></img>
+        <Image src="/logo-ins.webp" width="100" height="100" alt="Insignia" className="mb-6"></Image>
       </div>
       <Card className="w-full max-w-sm">
         <CardHeader>
