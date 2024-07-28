@@ -18,7 +18,7 @@ const UserItem = ({ user }: { user: UserInterface }) => {
       <TableCell className="">Rp. {user.balance}</TableCell>
       <TableCell className="">{formatDatetime(user.createdAt)}</TableCell>
       <TableCell className="">{formatDatetime(user.updatedAt)}</TableCell>
-      <TableCell>
+      {/* <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button aria-haspopup="true" size="icon" variant="ghost">
@@ -36,7 +36,7 @@ const UserItem = ({ user }: { user: UserInterface }) => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      </TableCell>
+      </TableCell> */}
     </TableRow>
   )
 }

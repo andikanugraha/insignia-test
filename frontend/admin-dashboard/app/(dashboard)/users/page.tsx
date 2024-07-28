@@ -58,9 +58,9 @@ export default async function UsersPage({searchParams}: {searchParams: { q: stri
                 <TableHead>Balance</TableHead>
                 <TableHead>Created At</TableHead>
                 <TableHead>Updated At</TableHead>
-                <TableHead>
+                {/* <TableHead>
                   <span className="sr-only">Actions</span>
-                </TableHead>
+                </TableHead> */}
               </TableRow>
             </TableHeader>
             <TableBody>

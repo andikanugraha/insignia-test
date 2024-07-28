@@ -24,30 +24,45 @@ const TransactionsPage = async (
   const offset = Number(searchParams.offset ?? 0)
   const limit = Number(searchParams.limit ?? itemsPerPage)
   const profile = await getProfile(accessToken)
-  let transactions = await getMyTransactions(accessToken, type, from, to, offset, limit)
-  transactions = transactions.map((transaction: TransactionInterface) => {
-    return {
-      ...transaction,
-      type: transaction.fromId === profile.sub ? 'send' : 'receive'
-    }
-  })
-  const totalItems = transactions.length
+  const result = await getMyTransactions(accessToken, type, from, to, offset, limit)
+  let transactions = []
+  if (result.data) {
+    transactions = result.data.map((transaction: TransactionInterface) => {
+      return {
+        ...transaction,
+        type: transaction.fromId === profile.sub ? 'send' : 'receive'
+      }
+    })
+  }
+  const totalItems = result.total
 
-  async function prevPage() {
+  const prevPage = async () => {
     'use server'
     let targetOffset = offset - itemsPerPage
     if (targetOffset < 0) {
       targetOffset = 0;
     }
-    redirect(`/users?offset=${targetOffset}`)
-    // router.back();
+    const searchParams = new URLSearchParams({
+      type,
+      from,
+      to,
+      offset: String(targetOffset),
+      limit: String(limit),
+    })
+    redirect(`/transactions?${searchParams}`)
   }
 
-  async function nextPage() {
+  const nextPage = async () => {
     'use server'
     let targetOffset = offset + itemsPerPage
-    redirect(`/users?offset=${targetOffset}`)
-    // router.push(`/?offset=${offset}`, { scroll: false });
+    const searchParams = new URLSearchParams({
+      type,
+      from,
+      to,
+      offset: String(targetOffset),
+      limit: String(limit),
+    })
+    redirect(`/transactions?${searchParams}`)
   }
 
   const transactionTypes = ['all', 'send', 'receive']

@@ -42,8 +42,8 @@ export const getMyTransactions = async (
     type: type ?? '',
     from: from ?? '',
     to: to ?? '',
-    offset: offset?.toString() ?? '',
-    limit: offset?.toString() ?? ''
+    skip: offset?.toString() ?? '',
+    take: limit?.toString() ?? ''
   })
   const res = await fetch(apiUrl + 'my_transactions?' + searchParams, { headers })
   const result = await res.json()
