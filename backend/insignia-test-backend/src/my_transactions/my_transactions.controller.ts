@@ -1,4 +1,4 @@
-import { Controller, Get, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, Query, Request, UseGuards } from '@nestjs/common';
 import { MyTransactionsService } from './my_transactions.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ApiOkResponse } from '@nestjs/swagger';
@@ -11,7 +11,14 @@ export class MyTransactionsController {
   @UseGuards(AuthGuard)
   @Get()
   @ApiOkResponse({ type: MyTransactionsEntity, isArray: true })
-  getTransactions(@Request() req) {
-    return this.myTransactionsService.getTransactions(req.user.sub);
+  getTransactions(@Request() req, @Query() query) {
+    return this.myTransactionsService.getTransactions(
+      req.user.sub,
+      query.type,
+      query.from,
+      query.to,
+      Number(query.skip ?? 0),
+      Number(query.take ?? 10),
+    );
   }
 }

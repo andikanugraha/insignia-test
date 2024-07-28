@@ -30,6 +30,26 @@ export const getBalance = async (token: string) => {
   return result
 }
 
+export const getMyTransactions = async (
+  token: string,
+  type?: string,
+  from?: string,
+  to?: string,
+  offset?: number,
+  limit?: number) => {
+  const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
+  const searchParams = new URLSearchParams({
+    type: type ?? '',
+    from: from ?? '',
+    to: to ?? '',
+    offset: offset?.toString() ?? '',
+    limit: offset?.toString() ?? ''
+  })
+  const res = await fetch(apiUrl + 'my_transactions?' + searchParams, { headers })
+  const result = await res.json()
+  return result
+}
+
 export const getTransactions = async (from: string, to: string) => {
   const searchParams = new URLSearchParams({
     from,

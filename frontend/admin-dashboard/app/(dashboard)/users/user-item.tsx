@@ -7,6 +7,7 @@ import { UserInterface } from '@/lib/types/user';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { MoreHorizontal } from 'lucide-react';
+import { formatDatetime } from '@/lib/utils';
 
 const UserItem = ({ user }: { user: UserInterface }) => {
   const deleteUser = (formData: FormData) => {}
@@ -15,8 +16,8 @@ const UserItem = ({ user }: { user: UserInterface }) => {
     <TableRow>
       <TableCell className="font-medium">{user.username}</TableCell>
       <TableCell className="">Rp. {user.balance}</TableCell>
-      <TableCell className="">{new Date(user.createdAt).toLocaleDateString()}</TableCell>
-      <TableCell className="">{new Date(user.updatedAt).toLocaleDateString()}</TableCell>
+      <TableCell className="">{formatDatetime(user.createdAt)}</TableCell>
+      <TableCell className="">{formatDatetime(user.updatedAt)}</TableCell>
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
