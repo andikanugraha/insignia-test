@@ -3,7 +3,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
 import { getTopUsers } from '@/lib/api'
+import { CURRENCY } from '@/lib/constants'
 import { useSession } from 'next-auth/react'
+import { useFormatter } from 'next-intl'
 import React, { useEffect, useState } from 'react'
 import { Bar, BarChart, LabelList, XAxis, YAxis } from 'recharts'
 
@@ -13,6 +15,7 @@ interface TopUser {
 }
 
 const TopUsers = () => {
+  const format = useFormatter()
   const { data: session, status } = useSession()
   const accessToken = session?.accessToken
   const [users, setUsers] = useState<TopUser[]>([])
@@ -75,7 +78,7 @@ const TopUsers = () => {
                     offset={8}
                     className="fill-foreground"
                     fontSize={12}
-                    formatter={(value: string) => `${value}`}
+                    formatter={(value: string) => `${format.number(Number(value), { style: 'currency', currency: CURRENCY })}`}
                   />
                 </Bar>
                 <YAxis

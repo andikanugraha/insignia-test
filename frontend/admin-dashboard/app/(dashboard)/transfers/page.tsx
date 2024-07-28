@@ -26,8 +26,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useToast } from '@/components/ui/use-toast';
 import { BreadcrumbInterface } from '@/lib/types/breadcrumb';
 import SetBreadcrumbs from '@/components/custom/set-breadcrumbs';
+import { CURRENCY, MAX_TRANSFER_AMOUNT } from '@/lib/constants';
+import { useFormatter } from 'next-intl';
 
 const TransfersPage = () => {
+  const format = useFormatter()
   const { toast } = useToast()
   const { data: session, status } = useSession()
   const accessToken = session?.accessToken ?? ''
@@ -60,7 +63,7 @@ const TransfersPage = () => {
   const FormSchema = z.object({
     amount: z.coerce.number()
       .gt(0, 'Amount must be greater than zero.')
-      .lt(10000000, 'Amount must be less than 10000000'),
+      .lt(MAX_TRANSFER_AMOUNT, `Amount must be less than ${MAX_TRANSFER_AMOUNT}`),
     to: z.string({ required_error: 'Please select a user' })
   })
 
@@ -108,6 +111,8 @@ const TransfersPage = () => {
       .finally(() => {
         setIsLoading(false)
         setRefreshBalance(!refreshBalance)
+        form.setValue('amount', 0)
+        form.setValue('to', '')
       })
   }
 
@@ -151,12 +156,12 @@ const TransfersPage = () => {
                         <FormLabel>Amount</FormLabel>
                         <FormControl>
                           <div className="flex space-x-4 items-center">
-                            <div>IDR</div>
+                            <div>{CURRENCY}</div>
                             <Input type="number" placeholder="Please input amount" {...field} />
                           </div>
                         </FormControl>
                         <FormDescription>
-                          Please input amount between IDR 1 and IDR 10,000,000
+                          Please input amount between {CURRENCY} 1 and {CURRENCY} {format.number(MAX_TRANSFER_AMOUNT, { style: 'decimal' })}
                         </FormDescription>
                         <FormMessage />
                       </FormItem>

@@ -7,6 +7,8 @@ import { useSession } from 'next-auth/react'
 import React, { useEffect, useState } from 'react'
 import { Bar, BarChart, LabelList, XAxis, YAxis } from 'recharts'
 import { CircleArrowLeft, CircleArrowRight } from 'lucide-react'
+import { useFormatter } from 'next-intl'
+import { CURRENCY } from '@/lib/constants'
 
 interface TopTransaction {
   index: number,
@@ -15,6 +17,7 @@ interface TopTransaction {
 }
 
 const MyTopTransactions = () => {
+  const format = useFormatter()
   const { data: session, status } = useSession()
   const accessToken = session?.accessToken
   const [transactions, setTransactions] = useState<TopTransaction[]>([])
@@ -87,7 +90,7 @@ const MyTopTransactions = () => {
                     offset={8}
                     className="fill-foreground"
                     fontSize={12}
-                    formatter={(value: string) => `${value}`}
+                    formatter={(value: string) => `${format.number(Number(value), { style: 'currency', currency: CURRENCY })}`}
                   />
                 </Bar>
                 <YAxis

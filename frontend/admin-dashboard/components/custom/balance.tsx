@@ -10,6 +10,7 @@ import { useFormatter } from 'next-intl';
 import { Loader2, RefreshCcw } from 'lucide-react'
 import { useToast } from '../ui/use-toast'
 import { Button } from '../ui/button'
+import { CURRENCY } from '@/lib/constants'
 
 const Balance = ({ refresh }: { refresh: boolean }) => {
   const { toast } = useToast()
@@ -63,7 +64,7 @@ const Balance = ({ refresh }: { refresh: boolean }) => {
       <div className="text-lg">Balance</div>
       <div className="text-2xl font-bold">
         {isLoading && <Loader2 className="animate-spin"></Loader2>}
-        {!isLoading && <span>{format.number(balance, { style: 'currency', currency: 'IDR' })}</span>}
+        {!isLoading && <span>{format.number(balance, { style: 'currency', currency: CURRENCY })}</span>}
       </div>
       {!isLoading && 
         <div>
