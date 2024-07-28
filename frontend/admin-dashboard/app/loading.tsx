@@ -3,8 +3,8 @@ import React from 'react'
 
 const Loading = () => {
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center">
-      <div className="mt-12 mb-6">
+    <div className="min-h-screen w-full h-full flex flex-col justify-center items-center">
+      <div className="my-6">
         <Image
           src="/icon_insignia.jpg"
           width="200"

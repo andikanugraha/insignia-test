@@ -6,10 +6,11 @@ import { TableCell, TableRow } from '@/components/ui/table'
 import { TransactionInterface } from '@/lib/types/transaction'
 import { formatDatetime } from '@/lib/utils'
 import { MoreHorizontal } from 'lucide-react'
+import { useFormatter } from 'next-intl'
 import React from 'react'
 
 const TransactionItem = ({ transaction }: { transaction: TransactionInterface }) => {
-
+  const format = useFormatter();
   const deleteTransaction = (formData: FormData) => { }
   
   const showTextColor = () => {
@@ -21,7 +22,7 @@ const TransactionItem = ({ transaction }: { transaction: TransactionInterface })
       <TableCell className="font-bold uppercase">{transaction.type}</TableCell>
       <TableCell className="">{transaction.fromUsername}</TableCell>
       <TableCell className="">{transaction.toUsername}</TableCell>
-      <TableCell className={showTextColor()}>Rp. {transaction.amount}</TableCell>
+      <TableCell className={showTextColor()}>{format.number(transaction.amount, {style: 'currency', currency: 'IDR'})}</TableCell>
       <TableCell className="">{formatDatetime(transaction.createdAt)}</TableCell>
     </TableRow>
   )

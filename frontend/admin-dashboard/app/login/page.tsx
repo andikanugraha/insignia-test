@@ -1,6 +1,8 @@
+import { z } from 'zod'
 import { Button } from '@/components/ui/button';
 import {
   Card,
+  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -9,6 +11,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { signIn } from '@/lib/auth';
+import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 
 export default function LoginPage() {
@@ -34,7 +37,7 @@ export default function LoginPage() {
             Admin Dashboard for Insignia
           </CardDescription>
         </CardHeader>
-        <CardFooter>
+        <CardContent>
           <form
             action={actionSignIn}
             className="w-full"
@@ -47,8 +50,13 @@ export default function LoginPage() {
               <Label htmlFor="password">Password</Label>
               <Input id="password" name="password" placeholder="Please input Password" type="password"></Input>
             </div>
-            <Button className="w-full" type="submit">Sign in</Button>
+            <Button className="my-3 w-full" type="submit">Sign in</Button>
           </form>
+        </CardContent>
+        <CardFooter>
+          <Button className="w-full" variant="ghost" asChild>
+            <Link href="/register">Register Here</Link>
+          </Button>
         </CardFooter>
       </Card>
     </div>

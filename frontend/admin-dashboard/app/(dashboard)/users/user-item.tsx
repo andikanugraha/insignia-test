@@ -8,14 +8,16 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Button } from '@/components/ui/button';
 import { MoreHorizontal } from 'lucide-react';
 import { formatDatetime } from '@/lib/utils';
+import { useFormatter } from 'next-intl';
 
 const UserItem = ({ user }: { user: UserInterface }) => {
+  const format = useFormatter();
   const deleteUser = (formData: FormData) => {}
 
   return (
     <TableRow>
       <TableCell className="font-medium">{user.username}</TableCell>
-      <TableCell className="">Rp. {user.balance}</TableCell>
+      <TableCell className="">{format.number(user.balance, {style: 'currency', currency: 'IDR'})}</TableCell>
       <TableCell className="">{formatDatetime(user.createdAt)}</TableCell>
       <TableCell className="">{formatDatetime(user.updatedAt)}</TableCell>
       {/* <TableCell>

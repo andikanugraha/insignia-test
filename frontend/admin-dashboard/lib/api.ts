@@ -110,3 +110,16 @@ export const getTopUsers = async (token: string) => {
   const result = await res.json()
   return result
 }
+
+export const postRegister = async (username: string, password: string, balance: number = 0) => {
+  const res = await fetch(apiUrl + 'users', {
+    method: 'POST',
+    body: JSON.stringify({
+      username,
+      password,
+      balance
+    }),
+  })
+  const result = await res.json()
+  return result
+}
