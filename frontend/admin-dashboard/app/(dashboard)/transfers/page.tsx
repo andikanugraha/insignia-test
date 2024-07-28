@@ -24,6 +24,8 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useToast } from '@/components/ui/use-toast';
+import { BreadcrumbInterface } from '@/lib/types/breadcrumb';
+import SetBreadcrumbs from '@/components/custom/set-breadcrumbs';
 
 const TransfersPage = () => {
   const { toast } = useToast()
@@ -32,6 +34,10 @@ const TransfersPage = () => {
   const [users, setUsers] = useState<UserInterface[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [refreshBalance, setRefreshBalance] = useState(false)
+  const currentBreadcrumb = {
+    text: 'Transfer',
+    href: '/transfer'
+  } as BreadcrumbInterface
 
   useEffect(() => {
     getUsers()
@@ -166,6 +172,7 @@ const TransfersPage = () => {
           </form>
         </Form>
       </div>
+      <SetBreadcrumbs breadcrumb={currentBreadcrumb}></SetBreadcrumbs>
     </div>
   );
 }

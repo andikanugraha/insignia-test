@@ -14,12 +14,18 @@ import UserItem from './user-item';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { redirect, } from 'next/navigation';
+import SetBreadcrumbs from '@/components/custom/set-breadcrumbs';
+import { BreadcrumbInterface } from '@/lib/types/breadcrumb';
 
 export default async function UsersPage({searchParams}: {searchParams: { q: string; offset: string }}) {
 
   const session = await auth()
   const search = searchParams.q ?? ''
   const offset = Number(searchParams.offset ?? 0)
+  const currentBreadcrumb = {
+    text: 'Users',
+    href: '/users'
+  } as BreadcrumbInterface
 
   const accessToken = session?.accessToken
   const users = await getUsers(search, offset)
@@ -44,66 +50,69 @@ export default async function UsersPage({searchParams}: {searchParams: { q: stri
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Users</CardTitle>
-        <CardDescription>View all users and their balance.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Username</TableHead>
-                <TableHead>Balance</TableHead>
-                <TableHead>Created At</TableHead>
-                <TableHead>Updated At</TableHead>
-                {/* <TableHead>
-                  <span className="sr-only">Actions</span>
-                </TableHead> */}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {users.map((user: UserInterface) => (
-                <UserItem key={user.id} user={user} />
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-      </CardContent>
-      <CardFooter>
-        <form className="flex items-center w-full justify-between">
-          <div className="text-xs text-muted-foreground">
-            Showing{' '}
-            <strong>
-              {offset+1}-{Math.min(offset + itemsPerPage, totalItems)}
-            </strong>{' '}
-            of <strong>{totalItems}</strong> users
+    <div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Users</CardTitle>
+          <CardDescription>View all users and their balance.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Username</TableHead>
+                  <TableHead>Balance</TableHead>
+                  <TableHead>Created At</TableHead>
+                  <TableHead>Updated At</TableHead>
+                  {/* <TableHead>
+                    <span className="sr-only">Actions</span>
+                  </TableHead> */}
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {users.map((user: UserInterface) => (
+                  <UserItem key={user.id} user={user} />
+                ))}
+              </TableBody>
+            </Table>
           </div>
-          <div className="flex">
-            <Button
-              formAction={prevPage}
-              variant="ghost"
-              size="sm"
-              type="submit"
-              disabled={offset === 0}
-            >
-              <ChevronLeft className="mr-2 h-4 w-4" />
-              Prev
-            </Button>
-            <Button
-              formAction={nextPage}
-              variant="ghost"
-              size="sm"
-              type="submit"
-              disabled={offset + itemsPerPage > totalItems}
-            >
-              Next
-              <ChevronRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
-        </form>
-      </CardFooter>
-    </Card>
+        </CardContent>
+        <CardFooter>
+          <form className="flex items-center w-full justify-between">
+            <div className="text-xs text-muted-foreground">
+              Showing{' '}
+              <strong>
+                {offset+1}-{Math.min(offset + itemsPerPage, totalItems)}
+              </strong>{' '}
+              of <strong>{totalItems}</strong> users
+            </div>
+            <div className="flex">
+              <Button
+                formAction={prevPage}
+                variant="ghost"
+                size="sm"
+                type="submit"
+                disabled={offset === 0}
+              >
+                <ChevronLeft className="mr-2 h-4 w-4" />
+                Prev
+              </Button>
+              <Button
+                formAction={nextPage}
+                variant="ghost"
+                size="sm"
+                type="submit"
+                disabled={offset + itemsPerPage > totalItems}
+              >
+                Next
+                <ChevronRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
+          </form>
+        </CardFooter>
+      </Card>
+      <SetBreadcrumbs breadcrumb={currentBreadcrumb}></SetBreadcrumbs>
+    </div>
   );
 }

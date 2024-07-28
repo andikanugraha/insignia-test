@@ -53,7 +53,7 @@ const DashboardMenu = async () => {
             <span className="font-bold">{profile.username}</span>
           </div>
           <div className="mt-2">
-            <Balance></Balance>
+            <Balance refresh={true}></Balance>
           </div>
           <div className="mt-4 grid grid-cols-12 gap-4">
             {menuItems.map(menuItem => (

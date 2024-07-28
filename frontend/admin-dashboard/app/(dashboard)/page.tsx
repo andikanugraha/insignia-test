@@ -11,6 +11,7 @@ import MyTopTransactions from "./my-top-transactions";
 import TopUsers from "./top-users";
 import DashboardMenu from "./dashboard-menu";
 import { redirect } from "next/navigation";
+import SetBreadcrumbs from "@/components/custom/set-breadcrumbs";
 
 export default async function ProductsPage({
   searchParams
@@ -22,8 +23,7 @@ export default async function ProductsPage({
     redirect('/login')
   }
   const accessToken = session?.accessToken ?? ''
-  const search = searchParams.q ?? '';  
-  // console.log('session', session)
+  const search = searchParams.q ?? '';
 
   return (
     <div className="grid grid-cols-12 gap-4">
@@ -37,6 +37,7 @@ export default async function ProductsPage({
       <div className="col-span-12 lg:col-span-6">
         <TopUsers></TopUsers>
       </div>
+      <SetBreadcrumbs></SetBreadcrumbs>
       {/* <div className="col-span-6">
         <Tabs defaultValue="all">
           <div className="flex items-center">

@@ -1,6 +1,7 @@
 'use client'
 
 import Balance from '@/components/custom/balance';
+import SetBreadcrumbs from '@/components/custom/set-breadcrumbs';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -16,19 +17,27 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/components/ui/use-toast';
 import { getBalance, postTopup } from '@/lib/api';
 import { auth } from '@/lib/auth';
+import { BreadcrumbInterface } from '@/lib/types/breadcrumb';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useAppDispatch } from 'app/hooks';
+import { pushBreadcrumb, resetBreadcrumbs } from 'features/user/userSlice';
 import { useSession } from 'next-auth/react';
 import { revalidatePath } from 'next/cache';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 export default function TopupPage() {
+  // const dispatch = useAppDispatch()
   const { toast } = useToast()
   const { data: session, status } = useSession()
   const accessToken = session?.accessToken ?? ''
   const [isLoading, setIsLoading] = useState(true)
   const [refreshBalance, setRefreshBalance] = useState(false)
+  const currentBreadcrumb = {
+    text: 'Topup',
+    href: '/topup'
+  } as BreadcrumbInterface
 
   const FormSchema = z.object({
     amount: z.coerce.number()
@@ -72,7 +81,6 @@ export default function TopupPage() {
         setIsLoading(false)
         setRefreshBalance(!refreshBalance)
       })
-    
   }
 
   return (
@@ -115,6 +123,7 @@ export default function TopupPage() {
           </form>
         </Form>
       </div>
+      <SetBreadcrumbs breadcrumb={currentBreadcrumb}></SetBreadcrumbs>
     </div>
   );
 }
