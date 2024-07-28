@@ -14,17 +14,29 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { signIn } from '@/lib/auth';
+import { signIn as signInServer } from '@/lib/auth';
+import { signIn } from "next-auth/react";
 import Link from 'next/link';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 
-export default function LoginPage() {
-  const [errors, setErrors] = useState<any[]>([])
+export default function LoginPage({ searchParams }: { searchParams: { error: string } }) {
+  const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
+  const error = searchParams.error;
+  
+  useEffect(() => {
+    if (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Login failed!',
+        description: 'Invalid username or password.'
+      })
+    }
+  }, [toast, error])
 
   const FormSchema = z.object({
     username: z.string().min(3, 'Username must be at least 3 characters'),
@@ -42,13 +54,13 @@ export default function LoginPage() {
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     setIsLoading(true)
     try {
+      // Manual parse and validate input user, currently we use react-hook-form
       // const username = formData.get('username')?.toString()
       // const password = formData.get('password')?.toString()
       // const response = FormSchema.safeParse({
       //   username,
       //   password
       // })
-
       // if (!response.success) {
       //   let errArr: any[] = [];
       //   const { errors: err } = response.error;
@@ -58,17 +70,26 @@ export default function LoginPage() {
       //   setErrors(errArr);
       //   throw err;
       // }
-      await signIn('credentials', {
-        redirectTo: '/',
+      
+      const user = await signIn('credentials', {
+        callbackUrl: '/',
+        redirectTo: false, // for server signin
         username: data.username,
         password: data.password,
       });
-      toast({
-        title: 'Login succesful!',
-        description: 'You will be redirect to dashboard.'
-      })
+      if (user && user.ok) {
+        toast({
+          title: 'Login succesful!',
+          description: 'You will be redirect to dashboard.'
+        })
+      }
     } catch (error) {
       console.error(error)
+      toast({
+        variant: 'destructive',
+        title: 'Login failed!',
+        description: 'Invalid username or password.'
+      })
     } finally {
       setIsLoading(false)
     }
@@ -120,22 +141,12 @@ export default function LoginPage() {
                 )}>
                 </FormField>
               </div>
-
-              {/* <div className="my-3">
-                <Label htmlFor="username">Username</Label>
-                <Input id="username" name="username" placeholder="Please input Username" type="text"></Input>
-              </div>
-              <div className="my-3">
-                <Label htmlFor="password">Password</Label>
-                <Input id="password" name="password" placeholder="Please input Password" type="password"></Input>
-              </div> */}
               <Button className="my-3 w-full" disabled={isLoading} type="submit">
                 {isLoading && (<>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   <div>Please wait</div>
                 </>)}
                 {!isLoading && <div>Sign in</div>}
-                
               </Button>
             </form>
           </Form>

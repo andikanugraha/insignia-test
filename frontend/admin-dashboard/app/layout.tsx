@@ -3,6 +3,7 @@ import { getLocale, getMessages } from 'next-intl/server';
 import './globals.css';
 
 import { Analytics } from '@vercel/analytics/react';
+import { Toaster } from '@/components/ui/toaster';
 
 export const metadata = {
   title: 'Insignia Test Admin Dashboard',
@@ -28,8 +29,9 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
+        <Toaster />
+        <Analytics />
       </body>
-      <Analytics />
     </html>
   );
 }

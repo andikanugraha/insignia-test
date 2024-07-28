@@ -1,6 +1,12 @@
 {
   "name": "insignia-test-admin-dashboard",
+  "description": "Insignia Test Admin Dashboard Frontend by Andika Nugraha",
   "version": "0.1.0",
+  "author": {
+    "name": "Andika Nugraha",
+    "email": "andikanzz@gmail.com",
+    "url": "https://andikanu.com"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",

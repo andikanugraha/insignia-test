@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import type { NextAuthConfig } from 'next-auth'
+import { AuthError } from 'next-auth';
 // import GitHub from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
@@ -11,6 +12,7 @@ const credentialsProvider = CredentialsProvider({
     password: {},
   },
   async authorize(credentials, req) {
+    const headers = { 'Content-Type': 'application/json'}
     const body = {
         username: credentials.username,
         password: credentials.password,
@@ -18,16 +20,18 @@ const credentialsProvider = CredentialsProvider({
     const res = await fetch(process.env.API_URL + 'auth/login', {
       method: 'POST',
       body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json'}
+      headers
     })
+    if (!res.ok) {
+      throw new AuthError(`${res.status}`)
+      // return null
+    }
     const user = await res.json()
-    console.log('user: ', user)
     if (res.ok && user) {
       return user
     }
 
-    throw new Error('Invalid username or password')
-    // return null
+    throw new Error('Something is wrong')
   }
 })
 
@@ -35,6 +39,7 @@ export const authOptions: NextAuthConfig = {
   providers: [credentialsProvider],
   pages: {
     signIn: '/login',
+    error: '/login',
   },
   callbacks: {
     async session({ session, user, token }) {

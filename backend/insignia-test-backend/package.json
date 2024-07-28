@@ -2,7 +2,11 @@
   "name": "insignia-test-backend",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": {
+    "name": "Andika Nugraha",
+    "email": "andikanzz@gmail.com",
+    "url": "https://andikanu.com"
+  },
   "private": true,
   "license": "UNLICENSED",
   "scripts": {

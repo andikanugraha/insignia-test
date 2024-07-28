@@ -11,27 +11,20 @@ import MyTopTransactions from "./my-top-transactions";
 import { SessionProvider } from "next-auth/react";
 import TopUsers from "./top-users";
 import DashboardMenu from "./dashboard-menu";
+import { redirect } from "next/navigation";
 
 export default async function ProductsPage({
   searchParams
 }: {
-  searchParams: { q: string; offset: string };
+  searchParams: { q: string; };
   }) {
-  // const { data: session } = useSession();
   const session = await auth()
-  const search = searchParams.q ?? '';
-  const offset = searchParams.offset ?? 0;
-  // const { products, newOffset, totalProducts } = await getProducts(
-  //   search,
-  //   Number(offset)
-  // );
-  const accessToken = session?.accessToken
-  const users = await getUsers(search, Number(offset));
-  console.log('users', users)
-  console.log('session', session)
-  const topTransactions = await getTopTransactionsPerUser(accessToken ?? '')
-  // const transactions = await getTransactions()
-  console.log('top transactions', topTransactions)
+  if (!session) {
+    redirect('/login')
+  }
+  const accessToken = session?.accessToken ?? ''
+  const search = searchParams.q ?? '';  
+  // console.log('session', session)
 
   return (
     <div className="grid grid-cols-12 gap-4">

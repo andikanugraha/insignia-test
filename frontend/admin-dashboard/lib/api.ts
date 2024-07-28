@@ -10,6 +10,9 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL
 
 export const getUsers = async (search: string, offset: number) => {
   const res = await fetch(apiUrl + 'users')
+  if (!res.ok) {
+    throw new Error(`${res.status}`)
+  }
   const result = await res.json()
   return result
 }
@@ -17,6 +20,9 @@ export const getUsers = async (search: string, offset: number) => {
 export const getProfile = async (token: string) => {
   const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
   const res = await fetch(apiUrl + 'auth/profile', { headers })
+  if (!res.ok) {
+    throw new Error(`${res.status}`)
+  }
   const result = await res.json()
   return result
 }
@@ -26,6 +32,9 @@ export const getBalance = async (token: string) => {
   const res = await fetch(apiUrl + 'balance', { 
     headers
   })
+  if (!res.ok) {
+    throw new Error(`${res.status}`)
+  }
   const result = await res.json()
   return result
 }
@@ -46,6 +55,9 @@ export const getMyTransactions = async (
     take: limit?.toString() ?? ''
   })
   const res = await fetch(apiUrl + 'my_transactions?' + searchParams, { headers })
+  if (!res.ok) {
+    throw new Error(`${res.status}`)
+  }
   const result = await res.json()
   return result
 }
@@ -56,6 +68,9 @@ export const getTransactions = async (from: string, to: string) => {
     to
   })
   const res = await fetch(apiUrl + 'transactions?' + searchParams, {})
+  if (!res.ok) {
+    throw new Error(`${res.status}`)
+  }
   const result = await res.json()
   return result
 }
@@ -69,6 +84,9 @@ export const postTopup = async (token: string, amount: number) => {
     }),
     headers
   })
+  if (!res.ok) {
+    throw new Error(`${res.status}`)
+  }
   if (res.status === 204) {
     return true
   } else {
@@ -86,6 +104,9 @@ export const postTransfer = async (token: string, toUsername: string, amount: nu
     }),
     headers
   })
+  if (!res.ok) {
+    throw new Error(`${res.status}`)
+  }
   if (res.status === 204) {
     return true
   } else {
@@ -98,6 +119,9 @@ export const getTopTransactionsPerUser = async (token: string) => {
   const res = await fetch(apiUrl + 'top_transactions_per_user', {
     headers
   })
+  if (!res.ok) {
+    throw new Error(`${res.status}`)
+  }
   const result = await res.json()
   return result
 }
@@ -107,11 +131,15 @@ export const getTopUsers = async (token: string) => {
   const res = await fetch(apiUrl + 'top_users', {
     headers
   })
+  if (!res.ok) {
+    throw new Error(`${res.status}`)
+  }
   const result = await res.json()
   return result
 }
 
 export const postRegister = async (username: string, password: string, balance: number = 0) => {
+  const headers = { 'Content-Type': 'application/json'}
   const res = await fetch(apiUrl + 'users', {
     method: 'POST',
     body: JSON.stringify({
@@ -119,7 +147,11 @@ export const postRegister = async (username: string, password: string, balance: 
       password,
       balance
     }),
+    headers
   })
+  if (!res.ok) {
+    throw new Error(`${res.status}`)
+  }
   const result = await res.json()
   return result
 }
