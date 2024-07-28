@@ -78,7 +78,7 @@ export default async function UsersPage({searchParams}: {searchParams: { q: stri
             <strong>
               {offset+1}-{Math.min(offset + itemsPerPage, totalItems)}
             </strong>{' '}
-            of <strong>{totalItems}</strong> products
+            of <strong>{totalItems}</strong> users
           </div>
           <div className="flex">
             <Button

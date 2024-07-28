@@ -139,7 +139,7 @@ const TransactionsPage = async (
             <strong>
               {offset+1}-{Math.min(offset + itemsPerPage, totalItems)}
             </strong>{' '}
-            of <strong>{totalItems}</strong> products
+            of <strong>{totalItems}</strong> transactions
           </div>
           <div className="flex">
             <Button

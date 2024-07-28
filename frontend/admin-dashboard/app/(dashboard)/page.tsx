@@ -8,7 +8,6 @@ import { getProducts } from '@/lib/db';
 import { getUsers, getTransactions, getTopTransactionsPerUser } from '@/lib/api';
 import { TransactionsTable } from './transactions-table';
 import MyTopTransactions from "./my-top-transactions";
-import { SessionProvider } from "next-auth/react";
 import TopUsers from "./top-users";
 import DashboardMenu from "./dashboard-menu";
 import { redirect } from "next/navigation";
@@ -28,21 +27,15 @@ export default async function ProductsPage({
 
   return (
     <div className="grid grid-cols-12 gap-4">
-      <div className="col-span-6">
-        <SessionProvider>
-          <DashboardMenu></DashboardMenu>
-        </SessionProvider>
+      <div className="col-span-12 lg:col-span-6">
+        <DashboardMenu></DashboardMenu>
       </div>
       <div className="col-span-12"></div>
-      <div className="col-span-6">
-        <SessionProvider>
-          <MyTopTransactions></MyTopTransactions>
-        </SessionProvider>
+      <div className="col-span-12 lg:col-span-6">
+        <MyTopTransactions></MyTopTransactions>
       </div>
-      <div className="col-span-6">
-        <SessionProvider>
-          <TopUsers></TopUsers>
-        </SessionProvider>
+      <div className="col-span-12 lg:col-span-6">
+        <TopUsers></TopUsers>
       </div>
       {/* <div className="col-span-6">
         <Tabs defaultValue="all">

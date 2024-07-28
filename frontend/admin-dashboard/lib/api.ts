@@ -8,7 +8,7 @@ interface Transactions {
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL || process.env.API_URL
 
-export const getUsers = async (search: string, offset: number) => {
+export const getUsers = async (search?: string, offset?: number) => {
   const res = await fetch(apiUrl + 'users')
   if (!res.ok) {
     throw new Error(`${res.status}`)

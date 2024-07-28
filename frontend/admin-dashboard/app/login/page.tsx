@@ -99,7 +99,7 @@ export default function LoginPage({ searchParams }: { searchParams: { error: str
   return (
     <div className="min-h-screen flex flex-col justify-center items-start md:items-center p-8">
       <div>
-        <Image src="/logo-ins.webp" width="100" height="100" alt="Insignia" className="mb-6"></Image>
+        <Image src="/logo-ins.webp" width="100" height="50" alt="Insignia" className="mb-6"></Image>
       </div>
       <Card className="w-full max-w-sm">
         <CardHeader>
