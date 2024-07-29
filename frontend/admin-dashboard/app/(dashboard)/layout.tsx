@@ -74,7 +74,7 @@ function DesktopNav() {
     <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
       <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
         <Link
-          href="https://insignia.co.id/"
+          href="/"
           className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base"
         >
           {/* <VercelLogo className="h-3 w-3 transition-all group-hover:scale-110" /> */}
@@ -142,7 +142,13 @@ function MobileNav() {
             href="/"
             className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
           >
-            <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
+            {/* <Package2 className="h-5 w-5 transition-all group-hover:scale-110" /> */}
+            <Image
+              src="/icon_insignia.jpg"
+              width="100"
+              height="100"
+              alt="Insignia"
+              className="transition-all group-hover:scale-110"></Image>
             <span className="sr-only">Insignia</span>
           </Link>
           <Link

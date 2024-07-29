@@ -37,15 +37,12 @@ const MyTransactionsAggregate = () => {
     getMyTransactions(accessToken, undefined, undefined, undefined, 0, 100)
       .then((res) => {
         if (res && Array.isArray(res.data)) {
-          const newTransactions = res.data.map((t: any, index: number) => {
-            return {
-              ...t,
-              // type: t.fromId === profile.sub ? 'send' : 'receive'
-            }
-          })
+          const newTransactions = res.data
           newTransactions.reverse()
-          const amountSend = newTransactions.reduce((accumulator: number, transaction: TransactionInterface) => accumulator + transaction.amount, 0)
-          const amountReceive = newTransactions.reduce((accumulator: number, transaction: TransactionInterface) => accumulator + transaction.amount, 0)
+          const amountSend = newTransactions.reduce(
+            (accumulator: number, transaction: TransactionInterface) => transaction.type === 'send' ? accumulator + transaction.amount : accumulator, 0)
+          const amountReceive = newTransactions.reduce(
+            (accumulator: number, transaction: TransactionInterface) => transaction.type === 'receive' ? accumulator + transaction.amount : accumulator, 0)
           const amountAll = newTransactions.reduce((accumulator: number, transaction: TransactionInterface) => accumulator + transaction.amount, 0)
           setAggregate([
             {

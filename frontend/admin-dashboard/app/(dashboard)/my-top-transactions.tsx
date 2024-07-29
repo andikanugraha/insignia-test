@@ -31,7 +31,8 @@ const MyTopTransactions = () => {
               index: index + 1,
               type: t.amount < 0 ? 'sender': 'receiver',
               amount: Math.abs(t.amount),
-              fill: t.amount < 0 ? 'var(--color-sender)': 'var(--color-receiver)'
+              fill: t.amount < 0 ? 'var(--color-sender)': 'var(--color-receiver)',
+              stroke: t.amount < 0 ? 'var(--color-sender)': 'var(--color-receiver)',
             }
           })
           setTransactions(newTransactions)
@@ -80,7 +81,12 @@ const MyTopTransactions = () => {
                 layout="vertical"
                 margin={{left: 50}}
               >
-                <Bar dataKey="amount" fill="var(--color-amount)" radius={4}>
+                <Bar
+                  dataKey="amount"
+                  fill="var(--color-sender)"
+                  stroke="var(--color-sender)"
+                  fillOpacity={0.4}
+                  radius={4}>
                   <LabelList
                     dataKey="type"
                     position="left"

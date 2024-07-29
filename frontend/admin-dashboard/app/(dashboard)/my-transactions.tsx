@@ -21,10 +21,11 @@ const MyTransactions = () => {
   useEffect(() => {
     getMyTransactions(accessToken, undefined, undefined, undefined, 0, 100).then((res) => {
       if (res && Array.isArray(res.data)) {
-        const newTransactions = res.data.map((t: any, index: number) => {
+        const newTransactions = res.data.map((transaction: TransactionInterface) => {
           return {
-            ...t,
-            // type: t.fromId === profile.sub ? 'send' : 'receive'
+            ...transaction,
+            fill: transaction.type === 'send' ? 'var(--color-sender)': 'var(--color-receiver)',
+            stroke: transaction.type === 'send' ? 'var(--color-sender)': 'var(--color-receiver)',
           }
         })
         newTransactions.reverse()
@@ -63,13 +64,13 @@ const MyTransactions = () => {
           {isLoading && <div className="font-bold">Loading...</div>}
           <div className="">
             <ChartContainer config={chartConfig}>
-              <AreaChart
+              <BarChart
                 accessibilityLayer
                 data={transactions}
                 layout="horizontal"
                 margin={{left: 20, right: 20}}
               >
-                <Area
+                <Bar
                   dataKey="amount"
                   type="natural"
                   fill="var(--color-sender)"
@@ -83,16 +84,16 @@ const MyTransactions = () => {
                     className="fill-foreground"
                     fontSize={12}
                     formatter={(value: string) => chartConfig[value as keyof typeof chartConfig]?.label}
-                  />
-                  <LabelList
+                  /> */}
+                  {/* <LabelList
                     dataKey="amount"
-                    position="right"
+                    position="top"
                     offset={8}
                     className="fill-foreground"
                     fontSize={12}
                     formatter={(value: string) => `${format.number(Number(value), { style: 'currency', currency: CURRENCY })}`}
                   /> */}
-                </Area>
+                </Bar>
                 <XAxis
                   dataKey="createdAt"
                   type="category"
@@ -108,7 +109,7 @@ const MyTransactions = () => {
                   content={<ChartTooltipContent />}>
                 </ChartTooltip>
                 <ChartLegend content={<ChartLegendContent />} />
-              </AreaChart>
+              </BarChart>
             </ChartContainer>
           </div>
         </CardContent>
