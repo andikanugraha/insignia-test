@@ -60,3 +60,40 @@ Building an Admin Dashboard with React.js
     - Provide search and filter option
 
 ### Test duration: max. 7 days
+
+## Repository
+
+### Github Public Repo (Backend & Frontend)
+
+https://github.com/andikanugraha/insignia-test
+
+## Deployment Live
+
+### Backend
+
+#### Base URL
+
+https://insignia-test.adaptable.app/
+
+#### Swagger URL
+
+https://insignia-test.adaptable.app/api/
+
+### Frontend
+
+#### Base URL
+
+https://insignia-test-seven.vercel.app/
+
+#### Login
+
+https://insignia-test-seven.vercel.app/login/
+
+#### Login Credentials
+
+username: user1
+password: password123
+
+#### Register
+
+https://insignia-test-seven.vercel.app/register/
