@@ -92,8 +92,17 @@ https://insignia-test-seven.vercel.app/login/
 #### Login Credentials
 
 username: user1
+
 password: password123
 
 #### Register
 
 https://insignia-test-seven.vercel.app/register/
+
+## API PostMan
+
+Contact me at andikanzz@gmail.com
+
+## Environment Variables
+
+Contact me at andikanzz@gmail.com
