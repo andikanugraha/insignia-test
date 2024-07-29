@@ -45,14 +45,19 @@ export const getMyTransactions = async (
   from?: string,
   to?: string,
   offset?: number,
-  limit?: number) => {
+  limit?: number,
+  sort?: string,
+  order?: string
+) => {
   const headers = { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}
   const searchParams = new URLSearchParams({
     type: type ?? '',
     from: from ?? '',
     to: to ?? '',
     skip: offset?.toString() ?? '',
-    take: limit?.toString() ?? ''
+    take: limit?.toString() ?? '',
+    sort: sort ?? 'id',
+    order: order ?? 'desc',
   })
   const res = await fetch(apiUrl + 'my_transactions?' + searchParams, { headers })
   if (!res.ok) {

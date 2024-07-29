@@ -15,9 +15,17 @@ import { BreadcrumbInterface } from '@/lib/types/breadcrumb'
 import SetBreadcrumbs from '@/components/custom/set-breadcrumbs'
 import { ITEMS_PER_PAGE } from '@/lib/constants'
 
-const TransactionsPage = async (
-  { searchParams }:
-    { searchParams: { type: string; from: string; to: string; offset: string; limit: string } }) => {
+interface SearchParams {
+  type: string
+  from: string
+  to: string
+  offset: string
+  limit: string
+  sort: string
+  order: string
+}
+
+const TransactionsPage = async ({ searchParams } : { searchParams: SearchParams }) => {
   const session = await auth()
   const accessToken = session?.accessToken ?? ''
   const currentBreadcrumb = {
@@ -28,10 +36,12 @@ const TransactionsPage = async (
   const type = searchParams.type ?? ''
   const from = searchParams.from ?? ''
   const to = searchParams.to ?? ''
+  const sort = searchParams.sort ?? 'id'
+  const order = searchParams.order ?? 'desc'
   const offset = Number(searchParams.offset ?? 0)
   const limit = Number(searchParams.limit ?? itemsPerPage)
   const profile = await getProfile(accessToken)
-  const result = await getMyTransactions(accessToken, type, from, to, offset, limit)
+  const result = await getMyTransactions(accessToken, type, from, to, offset, limit, sort, order)
   let transactions = []
   if (result.data) {
     transactions = result.data.map((transaction: TransactionInterface) => {
@@ -55,6 +65,8 @@ const TransactionsPage = async (
       to,
       offset: String(targetOffset),
       limit: String(limit),
+      sort,
+      order
     })
     redirect(`/transactions?${searchParams}`)
   }
@@ -68,11 +80,46 @@ const TransactionsPage = async (
       to,
       offset: String(targetOffset),
       limit: String(limit),
+      sort,
+      order
     })
     redirect(`/transactions?${searchParams}`)
   }
 
   const transactionTypes = ['all', 'send', 'receive']
+  const sortOptions = [
+    {
+      text: 'Default',
+      value: 'id'
+    },
+    {
+      text: 'From',
+      value: 'fromId'
+    },
+    {
+      text: 'To',
+      value: 'toId'
+    },
+    {
+      text: 'Amount',
+      value: 'amount'
+    },
+    {
+      text: 'Transaction Time',
+      value: 'createdAt'
+    },
+  ]
+  const orderOptions = [
+    { 
+      text: 'Ascending',
+      value: 'asc'
+    },
+    { 
+      text: 'Descending',
+      value: 'desc'
+    },
+  ]
+  
 
   const actionSearch = async (formData: FormData) => {
     'use server'
@@ -80,6 +127,8 @@ const TransactionsPage = async (
       type: formData.get('type')?.toString() ?? '',
       from: formData.get('from')?.toString() ?? '',
       to: formData.get('to')?.toString() ?? '',
+      sort: formData.get('sort')?.toString() ?? '',
+      order: formData.get('order')?.toString() ?? '',
     })
 
     redirect('/transactions?' + searchParams)
@@ -97,7 +146,7 @@ const TransactionsPage = async (
             <form action={actionSearch} className="flex items-center gap-4">
               <div className="">Filters</div>
               <div>
-                <Select name="type">
+                <Select name="type" defaultValue={type}>
                   <SelectTrigger className="w-[180px] capitalize">
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
@@ -113,6 +162,30 @@ const TransactionsPage = async (
               </div>
               <div>
                 <Input name="to" placeholder="To username"></Input>
+              </div>
+              <div>
+                <Select name="sort" defaultValue={sort}>
+                  <SelectTrigger className="w-[180px] capitalize">
+                    <SelectValue placeholder="Select Sort" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {sortOptions.map((t: any) => (
+                      <SelectItem key={t.value} value={t.value} className="capitalize">{t.text}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Select name="order" defaultValue={order}>
+                  <SelectTrigger className="w-[180px] capitalize">
+                    <SelectValue placeholder="Select Order" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {orderOptions.map((t: any) => (
+                      <SelectItem key={t.value} value={t.value} className="capitalize">{t.text}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div>
                 <Button type="submit" variant="outline" size="icon">
