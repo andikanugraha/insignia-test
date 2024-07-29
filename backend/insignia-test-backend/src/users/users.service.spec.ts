@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { UsersController } from './users.controller';
+import { JwtModule } from '@nestjs/jwt';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -10,7 +11,7 @@ describe('UsersService', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
       providers: [UsersService],
-      imports: [PrismaModule],
+      imports: [PrismaModule, JwtModule],
       exports: [UsersService],
     }).compile();
 

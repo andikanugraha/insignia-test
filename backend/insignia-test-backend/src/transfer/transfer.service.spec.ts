@@ -3,13 +3,14 @@ import { TransferService } from './transfer.service';
 import { TransferController } from './transfer.controller';
 import { TransactionsModule } from 'src/transactions/transactions.module';
 import { UsersModule } from 'src/users/users.module';
+import { JwtModule } from '@nestjs/jwt';
 
 describe('TransferService', () => {
   let service: TransferService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [UsersModule, TransactionsModule],
+      imports: [UsersModule, TransactionsModule, JwtModule],
       controllers: [TransferController],
       providers: [TransferService],
     }).compile();
