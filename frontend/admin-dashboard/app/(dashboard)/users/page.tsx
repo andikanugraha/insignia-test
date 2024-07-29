@@ -16,6 +16,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { redirect, } from 'next/navigation';
 import SetBreadcrumbs from '@/components/custom/set-breadcrumbs';
 import { BreadcrumbInterface } from '@/lib/types/breadcrumb';
+import { ITEMS_PER_PAGE } from '@/lib/constants';
 
 export default async function UsersPage({searchParams}: {searchParams: { q: string; offset: string }}) {
 
@@ -30,7 +31,7 @@ export default async function UsersPage({searchParams}: {searchParams: { q: stri
   const accessToken = session?.accessToken
   const users = await getUsers(search, offset)
   const totalItems = users.length
-  let itemsPerPage = 10
+  const itemsPerPage = ITEMS_PER_PAGE
 
   async function prevPage() {
     'use server'

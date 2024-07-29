@@ -72,6 +72,7 @@ export class MyTransactionsService {
     ]);
     const myTransactions = transactions.map(
       (transaction: TransactionEntity) => {
+        const type = transaction.fromId === id ? 'send' : 'receive';
         return {
           id: transaction.id,
           fromId: transaction.fromId,
@@ -79,6 +80,7 @@ export class MyTransactionsService {
           amount: transaction.amount,
           fromUsername: transaction.from.username,
           toUsername: transaction.to.username,
+          type,
           createdAt: transaction.createdAt,
         };
       },

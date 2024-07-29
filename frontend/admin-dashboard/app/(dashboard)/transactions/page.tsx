@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input'
 import { BreadcrumbInterface } from '@/lib/types/breadcrumb'
 import SetBreadcrumbs from '@/components/custom/set-breadcrumbs'
+import { ITEMS_PER_PAGE } from '@/lib/constants'
 
 const TransactionsPage = async (
   { searchParams }:
@@ -23,7 +24,7 @@ const TransactionsPage = async (
     text: 'Transactions',
     href: '/transactions'
   } as BreadcrumbInterface
-  const itemsPerPage = 10
+  const itemsPerPage = ITEMS_PER_PAGE
   const type = searchParams.type ?? ''
   const from = searchParams.from ?? ''
   const to = searchParams.to ?? ''

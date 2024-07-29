@@ -64,7 +64,7 @@ const TransfersPage = () => {
     amount: z.coerce.number()
       .gt(0, 'Amount must be greater than zero.')
       .lt(MAX_TRANSFER_AMOUNT, `Amount must be less than ${MAX_TRANSFER_AMOUNT}`),
-    to: z.string({ required_error: 'Please select a user' })
+    to: z.string().min(1, 'Please select a user')
   })
 
   const form = useForm<z.infer<typeof FormSchema>>({

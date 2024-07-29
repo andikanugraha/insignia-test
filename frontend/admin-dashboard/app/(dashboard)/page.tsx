@@ -12,6 +12,8 @@ import TopUsers from "./top-users";
 import DashboardMenu from "./dashboard-menu";
 import { redirect } from "next/navigation";
 import SetBreadcrumbs from "@/components/custom/set-breadcrumbs";
+import MyTransactions from "./my-transactions";
+import MyTransactionsAggregate from "./my-transactions-aggregate";
 
 export default async function ProductsPage({
   searchParams
@@ -30,12 +32,17 @@ export default async function ProductsPage({
       <div className="col-span-12 lg:col-span-6">
         <DashboardMenu></DashboardMenu>
       </div>
-      <div className="col-span-12"></div>
+      <div className="col-span-12 lg:col-span-6">
+        <MyTransactionsAggregate></MyTransactionsAggregate>
+      </div>
       <div className="col-span-12 lg:col-span-6">
         <MyTopTransactions></MyTopTransactions>
       </div>
       <div className="col-span-12 lg:col-span-6">
         <TopUsers></TopUsers>
+      </div>
+      <div className="col-span-12">
+        <MyTransactions></MyTransactions>
       </div>
       <SetBreadcrumbs></SetBreadcrumbs>
       {/* <div className="col-span-6">

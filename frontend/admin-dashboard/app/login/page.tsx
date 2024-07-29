@@ -22,6 +22,7 @@ import Image from 'next/image';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
+import { getProfile } from "@/lib/api";
 
 export default function LoginPage({ searchParams }: { searchParams: { error: string } }) {
   const { toast } = useToast()
@@ -53,27 +54,10 @@ export default function LoginPage({ searchParams }: { searchParams: { error: str
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     setIsLoading(true)
-    try {
-      // Manual parse and validate input user, currently we use react-hook-form
-      // const username = formData.get('username')?.toString()
-      // const password = formData.get('password')?.toString()
-      // const response = FormSchema.safeParse({
-      //   username,
-      //   password
-      // })
-      // if (!response.success) {
-      //   let errArr: any[] = [];
-      //   const { errors: err } = response.error;
-      //   for (var i = 0; i < err.length; i++) {
-      //     errArr.push({ for: err[i].path[0], message: err[i].message });
-      //   }
-      //   setErrors(errArr);
-      //   throw err;
-      // }
-      
+    try {     
       const user = await signIn('credentials', {
         callbackUrl: '/',
-        redirectTo: false, // for server signin
+        redirectTo: false,
         username: data.username,
         password: data.password,
       });
@@ -121,9 +105,6 @@ export default function LoginPage({ searchParams }: { searchParams: { error: str
                     <FormControl>
                       <Input placeholder="Please input Username" {...field} />
                     </FormControl>
-                    {/* <FormDescription>
-                      This is your public display name.
-                    </FormDescription> */}
                     <FormMessage />
                   </FormItem>
                 )}>

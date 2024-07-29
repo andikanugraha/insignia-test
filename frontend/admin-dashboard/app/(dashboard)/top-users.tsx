@@ -17,17 +17,22 @@ interface TopUser {
 const TopUsers = () => {
   const format = useFormatter()
   const { data: session, status } = useSession()
-  const accessToken = session?.accessToken
+  const accessToken = session?.accessToken ?? ''
   const [users, setUsers] = useState<TopUser[]>([])
   const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
-    getTopUsers(accessToken ?? '').then((res) => {
-      console.log('top users', res)
-      if (Array.isArray(res)) {
-        setUsers(res)
-      }
-      setIsLoading(false)
-    })
+    getTopUsers(accessToken)
+      .then((res) => {
+        if (Array.isArray(res)) {
+          setUsers(res)
+        }
+      })
+      .catch((error) => { 
+        console.error(error)
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }, [accessToken])
 
   const chartConfig = {

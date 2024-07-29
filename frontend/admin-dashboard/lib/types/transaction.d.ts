@@ -5,6 +5,7 @@ export interface TransactionInterface {
   fromUsername: string
   toUsername: string
   amount: number
+  type: string
   createdAt: Date
 
   type: string
