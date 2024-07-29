@@ -158,10 +158,10 @@ const TransactionsPage = async ({ searchParams } : { searchParams: SearchParams 
                 </Select>
               </div>
               <div>
-                <Input name="from" placeholder="From username"></Input>
+                <Input name="from" placeholder="From username" className="w-[180px]"></Input>
               </div>
               <div>
-                <Input name="to" placeholder="To username"></Input>
+                <Input name="to" placeholder="To username" className="w-[180px]"></Input>
               </div>
               <div>
                 <Select name="sort" defaultValue={sort}>
