@@ -19,6 +19,8 @@ export class MyTransactionsController {
       query.to,
       Number(query.skip ?? 0),
       Number(query.take ?? 10),
+      query.sort,
+      query.order,
     );
   }
 }

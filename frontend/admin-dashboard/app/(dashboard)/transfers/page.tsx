@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import { getBalance, getUsers, postTransfer } from '@/lib/api';
+import { getBalance, getProfile, getUsers, postTransfer } from '@/lib/api';
 import { auth } from '@/lib/auth';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -28,12 +28,14 @@ import { BreadcrumbInterface } from '@/lib/types/breadcrumb';
 import SetBreadcrumbs from '@/components/custom/set-breadcrumbs';
 import { CURRENCY, MAX_TRANSFER_AMOUNT } from '@/lib/constants';
 import { useFormatter } from 'next-intl';
+import { ProfileInterface } from '@/lib/types/profile';
 
 const TransfersPage = () => {
   const format = useFormatter()
   const { toast } = useToast()
   const { data: session, status } = useSession()
   const accessToken = session?.accessToken ?? ''
+  const [profile, setProfile] = useState<ProfileInterface>()
   const [users, setUsers] = useState<UserInterface[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [refreshBalance, setRefreshBalance] = useState(false)
@@ -43,22 +45,38 @@ const TransfersPage = () => {
   } as BreadcrumbInterface
 
   useEffect(() => {
-    getUsers()
-      .then((res) => {
-        setUsers(res)
+    getProfile(accessToken)
+      .then((resProfile) => {
+        setProfile(resProfile)
+        getUsers()
+          .then((res) => {
+            if (res && Array.isArray(res)) {
+              const users = res.filter((user: UserInterface) => user.id !== profile?.sub)
+              setUsers(users)
+            }
+          })
+          .catch((error) => {
+            console.error(error)
+            toast({
+              variant: 'destructive',
+              title: 'Load user failed!',
+              description: 'Please refresh the page.'
+            })  
+          })
+          .finally(() => {
+            setIsLoading(false)
+          })
       })
       .catch((error) => {
         console.error(error)
         toast({
           variant: 'destructive',
-          title: 'Load user failed!',
+          title: 'Load profile failed!',
           description: 'Please refresh the page.'
-        })  
-      })
-      .finally(() => {
+        }) 
         setIsLoading(false)
       })
-  }, [toast])
+  }, [toast, accessToken, profile])
 
   const FormSchema = z.object({
     amount: z.coerce.number()

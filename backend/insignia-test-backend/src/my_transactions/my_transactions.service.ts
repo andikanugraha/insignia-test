@@ -13,6 +13,8 @@ export class MyTransactionsService {
     to?: string,
     skip: number = 0,
     take: number = 10,
+    sort: string = 'createdAt',
+    order: string = 'desc',
   ) {
     let where: any = {
       OR: [
@@ -28,6 +30,8 @@ export class MyTransactionsService {
       from: true,
       to: true,
     };
+    const orderBy: any = {};
+    orderBy[sort] = order;
     if (type === 'send') {
       where = {
         fromId: id,
@@ -59,9 +63,7 @@ export class MyTransactionsService {
     const query: any = {
       where,
       include,
-      orderBy: {
-        createdAt: 'desc',
-      },
+      orderBy,
       skip,
       take,
     };
