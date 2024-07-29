@@ -1,12 +1,9 @@
 // import { useSession, signIn, signOut } from "next-auth/react";
-import { auth, authOptions } from "@/lib/auth"
+import { auth } from "@/lib/auth"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { File, PlusCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ProductsTable } from './products-table';
-import { getProducts } from '@/lib/db';
 import { getUsers, getTransactions, getTopTransactionsPerUser } from '@/lib/api';
-import { TransactionsTable } from './transactions-table';
 import MyTopTransactions from "./my-top-transactions";
 import TopUsers from "./top-users";
 import DashboardMenu from "./dashboard-menu";

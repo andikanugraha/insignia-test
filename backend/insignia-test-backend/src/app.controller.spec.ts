@@ -15,8 +15,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return "Insignia Test API Works!"', () => {
+      expect(appController.getHello()).toBe('Insignia Test API Works!');
     });
   });
 });
