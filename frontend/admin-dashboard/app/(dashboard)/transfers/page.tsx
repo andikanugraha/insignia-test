@@ -29,6 +29,7 @@ import SetBreadcrumbs from '@/components/custom/set-breadcrumbs';
 import { CURRENCY, MAX_TRANSFER_AMOUNT } from '@/lib/constants';
 import { useFormatter } from 'next-intl';
 import { ProfileInterface } from '@/lib/types/profile';
+import { Loader2 } from 'lucide-react';
 
 const TransfersPage = () => {
   const format = useFormatter()
@@ -189,7 +190,13 @@ const TransfersPage = () => {
                 </div>
               </CardContent>
               <CardFooter className="justify-end">
-                <Button type="submit">Transfer</Button>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading && (<>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <div>Please wait</div>
+                  </>)}
+                  {!isLoading && <div>Transfer</div>}
+                </Button>
               </CardFooter>
             </Card>
           </form>

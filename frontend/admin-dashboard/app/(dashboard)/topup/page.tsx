@@ -22,6 +22,7 @@ import { BreadcrumbInterface } from '@/lib/types/breadcrumb';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppDispatch } from 'app/hooks';
 import { pushBreadcrumb, resetBreadcrumbs } from 'features/user/userSlice';
+import { Loader2 } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { useFormatter } from 'next-intl';
 import { revalidatePath } from 'next/cache';
@@ -35,7 +36,7 @@ export default function TopupPage() {
   const { toast } = useToast()
   const { data: session, status } = useSession()
   const accessToken = session?.accessToken ?? ''
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [refreshBalance, setRefreshBalance] = useState(false)
   const currentBreadcrumb = {
     text: 'Topup',
@@ -121,7 +122,13 @@ export default function TopupPage() {
                 </div>
               </CardContent>
               <CardFooter className="justify-end">
-                <Button type="submit">Topup</Button>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading && (<>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <div>Please wait</div>
+                  </>)}
+                  {!isLoading && <div>Topup</div>}
+                </Button>
               </CardFooter>
             </Card>
           </form>
