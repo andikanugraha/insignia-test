@@ -20,4 +20,9 @@ describe('TopupService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('should return true if success', async () => {
+    const result = await service.balanceTopup(5, 100);
+    expect(result).toBeTruthy();
+  });
 });

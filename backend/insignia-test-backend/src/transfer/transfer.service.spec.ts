@@ -21,4 +21,9 @@ describe('TransferService', () => {
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  it('should return true if success', async () => {
+    const result = await service.transfer(5, 'user1', 100); // username: user3
+    expect(result).toBeTruthy();
+  });
 });

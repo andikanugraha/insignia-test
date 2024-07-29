@@ -19,7 +19,14 @@ describe('TopTransactionsForUserService', () => {
     );
   });
 
+  const expectedResult = [];
+
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('should return an array of transactions', async () => {
+    const result = await service.getTopTransactionsForUser(13); // username: user10
+    expect(result).toEqual(expectedResult);
   });
 });

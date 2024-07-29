@@ -17,7 +17,27 @@ describe('TopUsersService', () => {
     service = module.get<TopUsersService>(TopUsersService);
   });
 
+  const expectedResult = [
+    {
+      username: 'user1',
+      transacted_value: 18600,
+    },
+    {
+      username: 'user3',
+      transacted_value: 8000,
+    },
+    {
+      username: 'user5',
+      transacted_value: 1500,
+    },
+  ];
+
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('should return an array of user', async () => {
+    const result = await service.getTopTransactingUsersByValue();
+    expect(result[0]).toEqual(expectedResult[0]);
   });
 });

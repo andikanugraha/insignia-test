@@ -17,7 +17,17 @@ describe('MyTransactionsService', () => {
     service = module.get<MyTransactionsService>(MyTransactionsService);
   });
 
+  const expectedResult = {
+    data: [],
+    total: 0,
+  };
+
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('should return an array of transactions', async () => {
+    const result = await service.getTransactions(13); // username: user10
+    expect(result).toEqual(expectedResult);
   });
 });

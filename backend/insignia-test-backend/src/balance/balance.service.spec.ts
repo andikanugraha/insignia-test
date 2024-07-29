@@ -17,7 +17,16 @@ describe('BalanceService', () => {
     service = module.get<BalanceService>(BalanceService);
   });
 
+  const expectedResult = {
+    balance: 100,
+  };
+
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('should return balance', async () => {
+    const result = await service.getBalance(13); // username: user10
+    expect(result).toEqual(expectedResult);
   });
 });
