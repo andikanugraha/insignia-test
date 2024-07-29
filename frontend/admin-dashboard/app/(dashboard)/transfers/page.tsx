@@ -46,38 +46,38 @@ const TransfersPage = () => {
   } as BreadcrumbInterface
 
   useEffect(() => {
-    getProfile(accessToken)
-      .then((resProfile) => {
-        setProfile(resProfile)
-        getUsers()
-          .then((res) => {
-            if (res && Array.isArray(res)) {
-              const users = res.filter((user: UserInterface) => user.id !== profile?.sub)
-              setUsers(users)
-            }
-          })
-          .catch((error) => {
-            console.error(error)
-            toast({
-              variant: 'destructive',
-              title: 'Load user failed!',
-              description: 'Please refresh the page.'
-            })  
-          })
-          .finally(() => {
-            setIsLoading(false)
-          })
+    getUsers()
+      .then((res) => {
+        if (res && Array.isArray(res)) {
+          // const users = res.filter((user: UserInterface) => user.id !== profile?.sub)
+          setUsers(res)
+        }
       })
       .catch((error) => {
         console.error(error)
         toast({
           variant: 'destructive',
-          title: 'Load profile failed!',
+          title: 'Load user failed!',
           description: 'Please refresh the page.'
-        }) 
+        })  
+      })
+      .finally(() => {
         setIsLoading(false)
       })
-  }, [toast, accessToken, profile])
+    // getProfile(accessToken)
+    //   .then((resProfile) => {
+    //     setProfile(resProfile)
+    //   })
+    //   .catch((error) => {
+    //     console.error(error)
+    //     toast({
+    //       variant: 'destructive',
+    //       title: 'Load profile failed!',
+    //       description: 'Please refresh the page.'
+    //     }) 
+    //     setIsLoading(false)
+    //   })
+  }, [toast, accessToken])
 
   const FormSchema = z.object({
     amount: z.coerce.number()

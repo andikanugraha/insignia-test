@@ -29,25 +29,25 @@ const Balance = ({ refresh }: { refresh: boolean }) => {
           setBalance(Number(res.balance))
           return
         }
-        toast({
-          variant: 'destructive',
-          title: 'Load Balance failed!',
-          description: 'Please refresh the page.'
-        })
+        // toast({
+        //   variant: 'destructive',
+        //   title: 'Load Balance failed!',
+        //   description: 'Please refresh the page.'
+        // })
       })
       .catch((error) => {
         console.error(error)
-        toast({
-          variant: 'destructive',
-          title: 'Load Balance failed!',
-          description: 'Please refresh the page.'
-        })
+        // toast({
+        //   variant: 'destructive',
+        //   title: 'Load Balance failed!',
+        //   description: 'Please refresh the page.'
+        // })
       })
       .finally(() => {
         setIsLoading(false)
       })
     
-  }, [toast, accessToken])
+  }, [accessToken])
 
   useEffect(() => {
     loadBalance()
